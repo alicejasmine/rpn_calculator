@@ -6,14 +6,13 @@ import 'rpn_calculator.dart';
 class CalculatorScreen extends StatefulWidget {
   const CalculatorScreen({super.key});
 
-
-
   @override
   State<CalculatorScreen> createState() => _CalculatorScreenState();
 }
 
 class _CalculatorScreenState extends State<CalculatorScreen> {
-  final RPNCalculator calculator=RPNCalculator();
+  final RPNCalculator calculator = RPNCalculator();
+
   num input = 0;
 
   @override
@@ -31,9 +30,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                   calculator.stack.isEmpty
-                        ? "0"
-                        :  '${calculator.stack.last}',
+                    calculator.stack.isEmpty ? "0" : '${calculator.stack.last}',
                     style: TextStyle(fontSize: 20),
                   ),
                 ],
@@ -127,7 +124,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                     child: const Text('3'),
                   ),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () => onOperationButtonPress('+'),
                     child: const Text('+'),
                   ),
                 ],
@@ -147,33 +144,37 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
 
   void onNumericButtonPress(num value) {
     setState(() {
-      input = input * 10 + value;
+      if (input == 0) {
+        input = value;
+      } else {
+        input = input * 10 + value;
+      }
     });
   }
 
   void onEnterButtonPress() {
     setState(() {
-    calculator.addToList(input.toDouble());
-      print(input);
+      calculator.addToList(input.toDouble());
       input = 0;
-      print('Stack: ${calculator.stack}');
     });
   }
 
   void onOperationButtonPress(String value) {
     if (value == '+') {
+
       setState(() {
-        AddOperation addOperation = AddOperation();
-        addOperation.execute(calculator.stack);
+        calculator.addToList(input.toDouble());
+        calculator.executeOperation(AddOperation());
+        input = 0;
+
       });
     }
   }
 
   void onClearButtonPress() {
     setState(() {
-     calculator.clearStack();
+      calculator.clearStack();
       input = 0;
-     print('Stack: ${calculator.stack}');
     });
   }
 }
