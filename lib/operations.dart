@@ -8,13 +8,14 @@ class AddOperation implements OperationHandler {
   @override
   void execute(List<num> stack) {
     print(stack.length);
-    if (stack.length < 2) return;
-    else{
-    num num2 = stack.removeLast();
-    num num1 = stack.removeLast();
-    stack.add(num1 + num2); // Add the result to the stack
-
-  }}
+    if (stack.length < 2)
+      return;
+    else {
+      num num2 = stack.removeLast();
+      num num1 = stack.removeLast();
+      stack.add(num1 + num2); // Add the result to the stack
+    }
+  }
 }
 
 class SubtractOperation implements OperationHandler {
@@ -58,8 +59,19 @@ class ExponentialOperation implements OperationHandler {
   @override
   void execute(List<num> stack) {
     if (stack.length < 2) return;
-    num num1 = stack.removeLast();
     num num2 = stack.removeLast();
+    num num1 = stack.removeLast();
     stack.add(pow(num1, num2));
+    print("power  $stack");
+  }
+}
+
+class RestOperation implements OperationHandler {
+  @override
+  void execute(List<num> stack) {
+    if (stack.length < 2) return;
+    num num2 = stack.removeLast();
+    num num1 = stack.removeLast();
+    stack.add(num1 % num2);
   }
 }

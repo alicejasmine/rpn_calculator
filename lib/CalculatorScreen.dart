@@ -53,16 +53,16 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                     child: const Text('AC'),
                   ),
                   ElevatedButton(
-                    onPressed: () {},
-                    child: const Text('+/-'),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () => onOperationButtonPress('%'),
                     child: const Text('%'),
                   ),
                   ElevatedButton(
-                    onPressed: () {},
-                    child: const Text('/'),
+                    onPressed: () => onOperationButtonPress('^'),
+                    child: const Text('^'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () => onOperationButtonPress('÷'),
+                    child: const Text('÷'),
                   ),
                 ],
               ),
@@ -82,8 +82,8 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                     child: const Text('9'),
                   ),
                   ElevatedButton(
-                    onPressed: () {},
-                    child: const Text('X'),
+                    onPressed: () => onOperationButtonPress('x'),
+                    child: const Text('x'),
                   ),
                 ],
               ),
@@ -103,7 +103,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                     child: const Text('6'),
                   ),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () => onOperationButtonPress('-'),
                     child: const Text('-'),
                   ),
                 ],
@@ -160,15 +160,27 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
   }
 
   void onOperationButtonPress(String value) {
-    if (value == '+') {
+    setState(() {
+      calculator.addToList(input.toDouble());
 
-      setState(() {
-        calculator.addToList(input.toDouble());
-        calculator.executeOperation(AddOperation());
-        input = 0;
-
-      });
-    }
+      switch (value) {
+        case '+':
+          calculator.executeOperation(AddOperation());
+        case '-':
+          calculator.executeOperation(SubtractOperation());
+        case 'x':
+          calculator.executeOperation(MultiplyOperation());
+        case '÷':
+          calculator.executeOperation(DivideOperation());
+        case '^':
+          calculator.executeOperation(ExponentialOperation());
+        case '%':
+          calculator.executeOperation(RestOperation());
+        default:
+          print("Invalid operation");
+      }
+    });
+    input = 0;
   }
 
   void onClearButtonPress() {
