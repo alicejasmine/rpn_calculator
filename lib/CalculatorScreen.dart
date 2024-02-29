@@ -13,16 +13,16 @@ class CalculatorScreen extends StatefulWidget {
 class _CalculatorScreenState extends State<CalculatorScreen> {
   final RPNCalculator calculator = RPNCalculator();
 
-  num input = 0;
+  String input = '0';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          centerTitle: true,
-          title: const Text("RPN Calculator"),
-          backgroundColor: Colors.blueAccent,
-        ),
+            centerTitle: true,
+            title: const Text("RPN Calculator",
+                style: TextStyle(color: Colors.white)), // Text color white
+            backgroundColor: Colors.blue.shade900),
         body: Padding(
             padding: EdgeInsets.only(top: 50),
             child: Column(children: [
@@ -50,7 +50,8 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                 children: [
                   ElevatedButton(
                     onPressed: () => onClearButtonPress(),
-                    child: const Text('AC'),
+                    child: const Text('CLEAR',
+                        style: TextStyle(color: Colors.deepOrange)),
                   ),
                   ElevatedButton(
                     onPressed: () => onOperationButtonPress('%'),
@@ -70,15 +71,15 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   FilledButton(
-                    onPressed: () => onNumericButtonPress(7),
+                    onPressed: () => onNumericButtonPress('7'),
                     child: const Text('7'),
                   ),
                   FilledButton(
-                    onPressed: () => onNumericButtonPress(8),
+                    onPressed: () => onNumericButtonPress('8'),
                     child: const Text('8'),
                   ),
                   FilledButton(
-                    onPressed: () => onNumericButtonPress(9),
+                    onPressed: () => onNumericButtonPress('9'),
                     child: const Text('9'),
                   ),
                   ElevatedButton(
@@ -91,15 +92,15 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   FilledButton(
-                    onPressed: () => onNumericButtonPress(4),
+                    onPressed: () => onNumericButtonPress('4'),
                     child: const Text('4'),
                   ),
                   FilledButton(
-                    onPressed: () => onNumericButtonPress(5),
+                    onPressed: () => onNumericButtonPress('5'),
                     child: const Text('5'),
                   ),
                   FilledButton(
-                    onPressed: () => onNumericButtonPress(6),
+                    onPressed: () => onNumericButtonPress('6'),
                     child: const Text('6'),
                   ),
                   ElevatedButton(
@@ -112,15 +113,15 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   FilledButton(
-                    onPressed: () => onNumericButtonPress(1),
+                    onPressed: () => onNumericButtonPress('1'),
                     child: const Text('1'),
                   ),
                   FilledButton(
-                    onPressed: () => onNumericButtonPress(2),
+                    onPressed: () => onNumericButtonPress('2'),
                     child: const Text('2'),
                   ),
                   FilledButton(
-                    onPressed: () => onNumericButtonPress(3),
+                    onPressed: () => onNumericButtonPress('3'),
                     child: const Text('3'),
                   ),
                   ElevatedButton(
@@ -132,36 +133,48 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  FilledButton(onPressed: () {}, child: const Text('0')),
-                  FilledButton(onPressed: () {}, child: const Text(',')),
+                  FilledButton( onPressed: () => onNumericButtonPress('0'), child: const Text('0')),
+                  FilledButton(
+                      onPressed: () => onCommaButtonPress(),
+                      child: const Text(',')),
                   ElevatedButton(
                       onPressed: () => onEnterButtonPress(),
-                      child: const Text('ENTER')),
+                      child: const Text('ENTER',
+                          style: TextStyle(color: Colors.green))),
                 ],
               ),
             ])));
   }
 
-  void onNumericButtonPress(num value) {
+  void onNumericButtonPress(String value) {
     setState(() {
-      if (input == 0) {
-        input = value;
-      } else {
-        input = input * 10 + value;
-      }
+
+        if (input == '0') {
+          input = value;
+        } else {
+          input = input + value;
+        }
+
+    });
+  }
+
+  void onCommaButtonPress() {
+    final newInput=input.toString() + '.';
+    setState(() {
+        input = newInput;
     });
   }
 
   void onEnterButtonPress() {
     setState(() {
-      calculator.addToList(input.toDouble());
-      input = 0;
+      calculator.addToList(double.parse(input));
+      input = '0';
     });
   }
 
   void onOperationButtonPress(String value) {
     setState(() {
-      calculator.addToList(input.toDouble());
+      calculator.addToList(double.parse(input));
 
       switch (value) {
         case '+':
@@ -180,13 +193,18 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
           print("Invalid operation");
       }
     });
-    input = 0;
+    input = '0';
   }
 
   void onClearButtonPress() {
     setState(() {
       calculator.clearStack();
-      input = 0;
+      input = '0';
     });
   }
+
+
+
+
+
 }
