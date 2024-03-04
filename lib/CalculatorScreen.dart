@@ -18,150 +18,63 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-            centerTitle: true,
-            title: const Text("RPN Calculator",
-                style: TextStyle(color: Colors.white)), // Text color white
-            backgroundColor: Colors.blue.shade900),
-        body: Padding(
-            padding: EdgeInsets.only(top: 50),
-            child: Column(children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    calculator.stack.isEmpty ? "0" : '${calculator.stack.last}',
-                    style: TextStyle(fontSize: 20),
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  // Add spacing between the two values
-                  Text(
-                    '$input',
-                    style: TextStyle(fontSize: 20),
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  ElevatedButton(
-                    onPressed: () => onClearButtonPress(),
-                    child: const Text('CLEAR',
-                        style: TextStyle(color: Colors.deepOrange)),
-                  ),
-                  ElevatedButton(
-                    onPressed: () => onOperationButtonPress('%'),
-                    child: const Text('%'),
-                  ),
-                  ElevatedButton(
-                    onPressed: () => onOperationButtonPress('^'),
-                    child: const Text('^'),
-                  ),
-                  ElevatedButton(
-                    onPressed: () => onOperationButtonPress('÷'),
-                    child: const Text('÷'),
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  FilledButton(
-                    onPressed: () => onNumericButtonPress('7'),
-                    child: const Text('7'),
-                  ),
-                  FilledButton(
-                    onPressed: () => onNumericButtonPress('8'),
-                    child: const Text('8'),
-                  ),
-                  FilledButton(
-                    onPressed: () => onNumericButtonPress('9'),
-                    child: const Text('9'),
-                  ),
-                  ElevatedButton(
-                    onPressed: () => onOperationButtonPress('x'),
-                    child: const Text('x'),
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  FilledButton(
-                    onPressed: () => onNumericButtonPress('4'),
-                    child: const Text('4'),
-                  ),
-                  FilledButton(
-                    onPressed: () => onNumericButtonPress('5'),
-                    child: const Text('5'),
-                  ),
-                  FilledButton(
-                    onPressed: () => onNumericButtonPress('6'),
-                    child: const Text('6'),
-                  ),
-                  ElevatedButton(
-                    onPressed: () => onOperationButtonPress('-'),
-                    child: const Text('-'),
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  FilledButton(
-                    onPressed: () => onNumericButtonPress('1'),
-                    child: const Text('1'),
-                  ),
-                  FilledButton(
-                    onPressed: () => onNumericButtonPress('2'),
-                    child: const Text('2'),
-                  ),
-                  FilledButton(
-                    onPressed: () => onNumericButtonPress('3'),
-                    child: const Text('3'),
-                  ),
-                  ElevatedButton(
-                    onPressed: () => onOperationButtonPress('+'),
-                    child: const Text('+'),
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  FilledButton( onPressed: () => onNumericButtonPress('0'), child: const Text('0')),
-                  FilledButton(
-                      onPressed: () => onCommaButtonPress(),
-                      child: const Text(',')),
-                  ElevatedButton(
-                      onPressed: () => onEnterButtonPress(),
-                      child: const Text('ENTER',
-                          style: TextStyle(color: Colors.green))),
-                ],
-              ),
-            ])));
+      appBar: AppBar(
+          centerTitle: true,
+          title: const Text("RPN Calculator",
+              style: TextStyle(color: Colors.white)), // Text color white
+          backgroundColor: Colors.blue.shade900),
+
+
+      body: Column(
+        children: <Widget>[
+          Expanded(child: _buildDisplayRow()),
+          Expanded(
+            flex: 2,
+            child: GridView.count(
+              crossAxisCount: 4,
+              children: [
+                _buildButton('CLEAR', () => onClearButtonPress()),
+                _buildButton('%', () => onOperationButtonPress('%')),
+                _buildButton('^', () => onOperationButtonPress('^')),
+                _buildButton('÷', () => onOperationButtonPress('÷')),
+                _buildButton('7', () => onNumericButtonPress('7')),
+                _buildButton('8', () => onNumericButtonPress('8')),
+                _buildButton('9', () => onNumericButtonPress('9')),
+                _buildButton('x', () => onOperationButtonPress('x')),
+                _buildButton('4', () => onNumericButtonPress('4')),
+                _buildButton('5', () => onNumericButtonPress('5')),
+                _buildButton('6', () => onNumericButtonPress('6')),
+                _buildButton('-', () => onOperationButtonPress('-')),
+                _buildButton('1', () => onNumericButtonPress('1')),
+                _buildButton('2', () => onNumericButtonPress('2')),
+                _buildButton('3', () => onNumericButtonPress('3')),
+                _buildButton('+', () => onOperationButtonPress('+')),
+                _buildButton('0', () => onNumericButtonPress('0')),
+                _buildButton(',', () => onCommaButtonPress()),
+                _buildButton('ENTER', () => onEnterButtonPress()),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
   }
+
 
   void onNumericButtonPress(String value) {
     setState(() {
-
-        if (input == '0') {
-          input = value;
-        } else {
-          input = input + value;
-        }
-
+      if (input == '0') {
+        input = value;
+      } else {
+        input = input + value;
+      }
     });
   }
 
   void onCommaButtonPress() {
-    final newInput=input.toString() + '.';
+    final newInput = input.toString() + '.';
     setState(() {
-        input = newInput;
+      input = newInput;
     });
   }
 
@@ -203,8 +116,56 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
     });
   }
 
+  Widget _buildButton(String text, void Function() onPressed) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: ElevatedButton(
+        onPressed: onPressed,
+        child: Text(
+          text,
+          style: TextStyle(fontSize: 15),
+        ),
+        style: ElevatedButton.styleFrom(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+          ),
+          padding: EdgeInsets.all(20),
+          backgroundColor: Colors.blue,
+          foregroundColor: Colors.white,
+        ),
+      ),
+    );
+  }
 
 
+
+  Widget _buildDisplayRow() {
+    return Expanded(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                calculator.stack.isEmpty ? "0" : '${calculator.stack.last}',
+                style: TextStyle(fontSize: 45),
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                '$input',
+                style: TextStyle(fontSize: 45),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
 
 
 }
