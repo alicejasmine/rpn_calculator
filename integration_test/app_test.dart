@@ -17,7 +17,7 @@ void main() {
   });
 
 
-  testWidgets('Addition of two numbers', (tester) async {
+  testWidgets('Addition', (tester) async {
     await tester.pumpWidget(const MyApp());
     expect((tester.widget(find.byKey(Key('input_text'))) as Text).data, equals('0'));
     await tester.enterDigits('1');
@@ -27,6 +27,42 @@ void main() {
     expect((tester.widget(find.byKey(Key('input_text'))) as Text).data, equals('0'));
     expect((tester.widget(find.byKey(Key('result_text'))) as Text).data, equals('3.0'));
   });
+
+
+
+testWidgets('Subtraction', (tester) async {
+await tester.pumpWidget(const MyApp());
+expect((tester.widget(find.byKey(Key('input_text'))) as Text).data, equals('0'));
+await tester.enterDigits('1');
+await tester.tapByKey(Key('ENTER'));
+await tester.enterDigits('2');
+await tester.enterDigits('-');
+expect((tester.widget(find.byKey(Key('input_text'))) as Text).data, equals('0'));
+expect((tester.widget(find.byKey(Key('result_text'))) as Text).data, equals('-1.0'));
+});
+
+  testWidgets('Multiplication', (tester) async {
+    await tester.pumpWidget(const MyApp());
+    expect((tester.widget(find.byKey(Key('input_text'))) as Text).data, equals('0'));
+    await tester.enterDigits('1');
+    await tester.tapByKey(Key('ENTER'));
+    await tester.enterDigits('2');
+    await tester.enterDigits('x');
+    expect((tester.widget(find.byKey(Key('input_text'))) as Text).data, equals('0'));
+    expect((tester.widget(find.byKey(Key('result_text'))) as Text).data, equals('2.0'));
+  });
+
+  testWidgets('Division', (tester) async {
+    await tester.pumpWidget(const MyApp());
+    expect((tester.widget(find.byKey(Key('input_text'))) as Text).data, equals('0'));
+    await tester.enterDigits('10');
+    await tester.tapByKey(Key('ENTER'));
+    await tester.enterDigits('2');
+    await tester.enterDigits('÷');
+    expect((tester.widget(find.byKey(Key('input_text'))) as Text).data, equals('0'));
+    expect((tester.widget(find.byKey(Key('result_text'))) as Text).data, equals('5.0'));
+  });
+
 
 }
 //helpers

@@ -68,7 +68,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                 _buildButton(
                     ',', Colors.teal.shade300, () => onCommaButtonPress(), key: Key(',')),
                 _buildButton(
-                    'ENTER', Colors.green.shade300, () => onEnterButtonPress(), key: Key('10')),
+                    'ENTER', Colors.green.shade300, () => onEnterButtonPress(), key: Key('ENTER')),
               ],
             ),
           ),
