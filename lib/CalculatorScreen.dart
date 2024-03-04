@@ -23,8 +23,6 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
           title: const Text("RPN Calculator",
               style: TextStyle(color: Colors.white)), // Text color white
           backgroundColor: Colors.blue.shade900),
-
-
       body: Column(
         children: <Widget>[
           Expanded(child: _buildDisplayRow()),
@@ -33,25 +31,44 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
             child: GridView.count(
               crossAxisCount: 4,
               children: [
-                _buildButton('CLEAR', () => onClearButtonPress()),
-                _buildButton('%', () => onOperationButtonPress('%')),
-                _buildButton('^', () => onOperationButtonPress('^')),
-                _buildButton('÷', () => onOperationButtonPress('÷')),
-                _buildButton('7', () => onNumericButtonPress('7')),
-                _buildButton('8', () => onNumericButtonPress('8')),
-                _buildButton('9', () => onNumericButtonPress('9')),
-                _buildButton('x', () => onOperationButtonPress('x')),
-                _buildButton('4', () => onNumericButtonPress('4')),
-                _buildButton('5', () => onNumericButtonPress('5')),
-                _buildButton('6', () => onNumericButtonPress('6')),
-                _buildButton('-', () => onOperationButtonPress('-')),
-                _buildButton('1', () => onNumericButtonPress('1')),
-                _buildButton('2', () => onNumericButtonPress('2')),
-                _buildButton('3', () => onNumericButtonPress('3')),
-                _buildButton('+', () => onOperationButtonPress('+')),
-                _buildButton('0', () => onNumericButtonPress('0')),
-                _buildButton(',', () => onCommaButtonPress()),
-                _buildButton('ENTER', () => onEnterButtonPress()),
+                _buildButton(
+                    'CLEAR', Colors.red.shade300, () => onClearButtonPress()),
+                _buildButton('%', Colors.blue.shade300,
+                    () => onOperationButtonPress('%')),
+                _buildButton('^', Colors.blue.shade300,
+                    () => onOperationButtonPress('^')),
+                _buildButton('÷', Colors.blue.shade300,
+                    () => onOperationButtonPress('÷')),
+                _buildButton(
+                    '7', Colors.teal.shade300, () => onNumericButtonPress('7')),
+                _buildButton(
+                    '8', Colors.teal.shade300, () => onNumericButtonPress('8')),
+                _buildButton(
+                    '9', Colors.teal.shade300, () => onNumericButtonPress('9')),
+                _buildButton('x', Colors.blue.shade300,
+                    () => onOperationButtonPress('x')),
+                _buildButton(
+                    '4', Colors.teal.shade300, () => onNumericButtonPress('4')),
+                _buildButton(
+                    '5', Colors.teal.shade300, () => onNumericButtonPress('5')),
+                _buildButton(
+                    '6', Colors.teal.shade300, () => onNumericButtonPress('6')),
+                _buildButton('-', Colors.blue.shade300,
+                    () => onOperationButtonPress('-')),
+                _buildButton(
+                    '1', Colors.teal.shade300, () => onNumericButtonPress('1')),
+                _buildButton(
+                    '2', Colors.teal.shade300, () => onNumericButtonPress('2')),
+                _buildButton(
+                    '3', Colors.teal.shade300, () => onNumericButtonPress('3')),
+                _buildButton('+', Colors.blue.shade300,
+                    () => onOperationButtonPress('+')),
+                _buildButton(
+                    '0', Colors.teal.shade300, () => onNumericButtonPress('0')),
+                _buildButton(
+                    ',', Colors.teal.shade300, () => onCommaButtonPress()),
+                _buildButton(
+                    'ENTER', Colors.green.shade300, () => onEnterButtonPress()),
               ],
             ),
           ),
@@ -59,7 +76,6 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
       ),
     );
   }
-
 
   void onNumericButtonPress(String value) {
     setState(() {
@@ -116,7 +132,8 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
     });
   }
 
-  Widget _buildButton(String text, void Function() onPressed) {
+  Widget _buildButton(
+      String text, Color backgroundColor, void Function() onPressed) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: ElevatedButton(
@@ -130,14 +147,12 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
             borderRadius: BorderRadius.all(Radius.circular(10)),
           ),
           padding: EdgeInsets.all(20),
-          backgroundColor: Colors.blue,
+          backgroundColor: backgroundColor,
           foregroundColor: Colors.white,
         ),
       ),
     );
   }
-
-
 
   Widget _buildDisplayRow() {
     return Expanded(
@@ -166,6 +181,4 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
       ),
     );
   }
-
-
 }
