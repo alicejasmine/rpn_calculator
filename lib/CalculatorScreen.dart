@@ -22,7 +22,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
           centerTitle: true,
           title: const Text("RPN Calculator",
               style: TextStyle(color: Colors.white)), // Text color white
-          backgroundColor: Colors.blue.shade900),
+          backgroundColor: Colors.blue.shade500),
       body: Column(
         children: <Widget>[
           Expanded(child: _buildDisplayRow()),
