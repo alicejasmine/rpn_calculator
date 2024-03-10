@@ -47,3 +47,7 @@ chromedriver-*/
 chromedriver*
 LICENSE.chromedriver
 
+/windows/
+/linux/
+/macos/
+
