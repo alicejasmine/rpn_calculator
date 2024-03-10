@@ -1,2 +1,6 @@
-# Auto detect text files and perform LF normalization
-* text=auto
+# Do not detect
+*.cc -linguist-detectable
+*.cpp -linguist-detectable
+
+# Detect
+*.dart linguist-detectable
